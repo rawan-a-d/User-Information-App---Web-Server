@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+    body
+        form(action="/form", method="post")
+
+            //- name='username' -- request.body.username
+            p First name:
+            input(type='text', name='firstname' placeholder='SpongeBob')
+            p Last name:
+            input(type='text', name='lastname', placeholder='SquarePants')
+            //- name='email' -- request.body.email
+            p email:
+            input(type='text', name='email' placeholder='hey@email.com')
+            input(type='submit', value='send your data')
