@@ -67,7 +67,7 @@ app.get('/result', function(req,res){
 // - route 4: renders a page with three forms on it (first name, last name, and email) 
 // that allows you to add new users to the users.json file.
 app.get('/form', function(req,res){
-	res.render('forms')
+	res.render('form')
 });
 
 

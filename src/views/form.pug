@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    style
+      //- we link in the CDN-css files here
+      include css/bootstrap.min.css
+      //- Optional theme
+      include css/bootstrap-theme.min.css
+      //- This is my css file
+      include css/main.css
+    style.
+      body{
+       background-color: #525252;
+      }
+      .centered-form{
+       margin-top: 60px;
+      }
+      .centered-form .panel{
+       background: rgba(255, 255, 255, 0.8);
+       box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+      }
+  body
+    .container
+      .row.centered-form
+        .col-xs-12.col-sm-8.col-md-4.col-sm-offset-2.col-md-offset-4
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title.text-center <big>Add user</big>
+            .panel-body
+              form(action='/form' method='post')
+                .row
+                  .col-xs-12.col-sm-12.col-md-12
+                    .form-group
+                      input#first_name.form-control.input-sm(type='text', name='firstname', placeholder='First Name')
+                .row
+                  .col-xs-12.col-sm-12.col-md-12
+                    .form-group
+                      input#last_name.form-control.input-sm(type='text', name='lastname', placeholder='Last Name')
+                .row
+                  .col-xs-12.col-sm-12.col-md-12
+                    .form-group
+                      input#email.form-control.input-sm(type='email', name='email', placeholder='Email Address')
+                .row
+                  .col-xs-12.col-sm-12.col-md-12
+                    .form-group
+                      input.btn.btn-info.btn-block(id='myButton', type='submit', value='Add')
+      //- JavaScript should be linked at the bottom of the page
+    script
+     include js/jquery.min.js
+     include js/bootstrap.min.js
