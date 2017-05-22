@@ -2,10 +2,44 @@ doctype html
 html
 	head
 		style
-			include css/style.css
+			include ../public/css/style.css
 	body
 		.wrap
 			.search
-				form(action="/search" method="post")
-					input.searchTerm(type='text', name='username' placeholder='Enter the name your looking for')
+				form(action="/search" method="post" autocomplete="off")
+					input.searchTerm(list ='suggestion' type='text' name='username' id='user' onkeyup='IFuckingHateAJAX(this.value)' placeholder='Enter the name your looking for')
+					datalist#suggestion(class='inputfield')
+						option#suggestedName(text='')
 					button.searchButton(type='submit') Search
+		script.
+			// Part 2: Bandwidth optimization
+			// Modify your form again so that AJAX requests happen at most once every 300 milliseconds.
+			// Do this work in a git branch called "bandwidth-optimization". 
+			// Then, merge this branch into master with a pull request.
+			
+			//sending a post request to the server with some data
+			var firstTime = Date.now()
+
+			function IFuckingHateAJAX(typedIn){
+				var secondTime = Date.now()
+				var timePassed = secondTime - firstTime
+				if(timePassed < 300){
+					//do nothing
+				}
+				else{
+					$.post('/suggestionFinder',{typedIn: typedIn}, function(data,status){
+						$('#suggestedName').text(data)
+					})	
+				}
+				firstTime = secondTime // Every time a button is pressed firstTime will take the value of the secondTime		
+				console.log('firstTime')
+				console.log(firstTime)
+				console.log('secondTime')
+				console.log(secondTime)	
+				console.log('timePassed')
+				console.log(timePassed)
+			}
+		script
+			include ../public/js/jquery.min.js
+
+			

@@ -3,11 +3,11 @@ html
   head
     style
       //- we link in the CDN-css files here
-      include css/bootstrap.min.css
+      include ../public/css/bootstrap.min.css
       //- Optional theme
-      include css/bootstrap-theme.min.css
+      include ../public/css/bootstrap-theme.min.css
       //- This is my css file
-      include css/main.css
+      include ../public/css/main.css
     style.
       body{
        background-color: #525252;
@@ -46,5 +46,5 @@ html
                       input.btn.btn-info.btn-block(id='myButton', type='submit', value='Add')
       //- JavaScript should be linked at the bottom of the page
     script
-     include js/jquery.min.js
-     include js/bootstrap.min.js
+     include ../public/js/jquery.min.js
+     include ../public/js/bootstrap.min.js
