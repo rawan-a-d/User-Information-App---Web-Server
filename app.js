@@ -3,7 +3,7 @@ const fs = require('fs');
 const app = express();
 const bodyParser = require('body-parser');
 
-app.set('views', './src/views');
+app.set('views', 'src/views');
 app.set('view engine', 'pug');
 
 app.use('/',bodyParser()); //creats key-value pairs request.body in app.post, e.g. request.body.username
@@ -11,7 +11,7 @@ app.use('/',bodyParser()); //creats key-value pairs request.body in app.post, e.
 // Create one route:
 // - route 1: renders a page that displays all your users.
 app.get('/', function (req, res) {
-	fs.readFile('./users.json', function (error, data) {
+	fs.readFile('./resources/users.json', function (error, data) {
 		if (error) {
 			console.log("error");
 		}
@@ -31,37 +31,56 @@ app.get('/search', function (req, res) {
 // then displays matching users on a new page.
 // Users should be matched based on whether either
 // their first or last name contains the input string.
-var fullName = "";
 app.post('/search', function (req, res) {
 	console.log('req.body.username in app.post("/search")')// to explain what I did next
 	console.log(req.body.username);
 
 	//how to process the data
-	fs.readFile('./users.json', function (error, data) {
+	fs.readFile('./resources/users.json', function (error, data) {
 		if (error) {
 			console.log("error");
 		}
 		var parsedData = JSON.parse(data);
 		
-		fullName = ""
+		var fullName = "";
 		for (var i = 0; i < parsedData.length; i++) {
-			if(req.body.username === (parsedData[i].firstname || parsedData[i].lastname)){
+			if(req.body.username === parsedData[i].firstname + " " + parsedData[i].lastname || req.body.username === parsedData[i].lastname || req.body.username === parsedData[i].firstname){
 				fullName = parsedData[i].firstname + " " + parsedData[i].lastname;
 			}
 		}
 		if(fullName === ""){
-			fullName = "The name you're searching for doesn't match any of our users."
+			fullName = "The name you're searching for doesn't match any of our users.";
 		}
 		console.log(fullName);
-		res.redirect('/result');
-
+		res.render('resultOfSearch', {result: fullName});
 	});
-
 });
 
-app.get('/result', function(req,res){
-	res.render('resultOfSearch', {result: fullName});			
+//live search
+// Part 1: Autocomplete
+// Modify your form so that every time the user enters a key, it makes an AJAX call that populates the search results.
+app.post('/suggestionFinder', function(req,res){
+	var suggest = ''
+	fs.readFile('./resources/users.json', function (error, data) {
+		if (error) {
+			console.log("error");
+		}
+		var parsedData = JSON.parse(data);
+		var typedIn= req.body.typedIn;
+		for (var i = 0; i < parsedData.length; i++) {
+			if(parsedData[i].firstname.slice(0, typedIn.length) === typedIn || parsedData[i].lastname.slice(0, typedIn.length) === typedIn){
+				console.log('suggestion found');
+				suggest = parsedData[i].firstname + " " + parsedData[i].lastname;
+			}
+		}
+		if(typedIn === ''){
+			suggest = ''
+		}
+		console.log(suggest);
+		res.send(suggest);
+	});
 });
+
 
 // Create two more routes:
 // - route 4: renders a page with three forms on it (first name, last name, and email) 
@@ -81,7 +100,7 @@ app.post('/form', function(req,res){
 		lastname : req.body.lastname,
 		email : req.body.email,
 	};
-	fs.readFile('./users.json', function (error, data) {
+	fs.readFile('./resources/users.json', function (error, data) {
 		if (error) {
 			console.log("error");
 		}
@@ -89,7 +108,7 @@ app.post('/form', function(req,res){
 		parsedData.push(newUser);
 		var stringifiedData = JSON.stringify(parsedData);
 		console.log(stringifiedData);
-		fs.writeFile('./users.json', stringifiedData , function (error, data){
+		fs.writeFile('./resources/users.json', stringifiedData , function (error, data){
 			if (error) {
 				console.log("error");
 			}

@@ -1,7 +1,6 @@
 {
   "name": "user-information-app-webserver",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,13 +8,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "fs": "0.0.1-security",
+    "gitignore": "^0.6.0",
     "nodemon": "^1.11.0",
     "pug": "^2.0.0-rc.1",
     "pug-bootstrap": "0.0.15"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rawan-a-d/User-Information-App---Web-Server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rawan-a-d/User-Information-App---Web-Server/issues"
+  },
+  "homepage": "https://github.com/rawan-a-d/User-Information-App---Web-Server#readme",
+  "description": ""
 }
